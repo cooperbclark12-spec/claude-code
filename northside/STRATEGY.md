@@ -2,6 +2,23 @@
 
 Page: **Northside Local** (Facebook page ID `1401246633065923`, reachable through the Porter Metrics `facebook-insights` connector).
 
+## Correction, 27 Oct: this overrides anything below that conflicts with it
+
+The first version of this plan assumed an appointment-setting business. The Master Brief (Drive `MASTER-BRIEF.md`) is the source of truth, and it says:
+- **What you sell:** Google Business Profile setup ($250 / $350) and Profile Care ($100/month) to owner-run trades and personal-care businesses on Brisbane's northside. The goal is $1,000 MRR, which is 10 Care clients.
+- **The page's real job:**
+  1. **Credibility.** Leads you text will look up Northside Local, so the page needs to look like a real local business.
+  2. **A second lead channel.** Your text reply rate is under 5%, and the brief says to change the channel, not the volume.
+- **T3 CTA everywhere:** comment or DM **CHECK** for the free Google Listing Check.
+- **Metric:** CHECK requests from ICP owners, then Listing Checks sent, conversations and clients. Ignore "booked calls"; you work written-only.
+- **Hard rules apply to every post:**
+  - no promised rankings, calls or results
+  - never name a client or show their results without written OK
+  - no jargon (no "SEO")
+  - Australian spelling
+- **Time zone:** Australia/Brisbane (AEST, no daylight saving). Weekdays are school, so posts go out at **6:00 PM**, when you can reply within the first hour.
+- **Time budget:** you have about 5 hrs/week in total. Facebook gets no new sessions. Approval fits inside Sunday's 90 min, and comment replies fit inside the Tue/Wed/Thu sessions.
+
 ## 0. Read this first: what's wrong with the original idea
 
 1. **"Large following" is not a business goal.** A local page with 20k followers and no booked calls is worth $0 to you. Track the chain *views → follows → DMs → booked calls → clients*, and judge every post by what it does further down that chain.
@@ -44,8 +61,8 @@ Cadence: **2 Reels per week.** At this volume, each post has to do more work, an
 
 | Day | Slot (local time) | Tier | Format |
 |---|---|---|---|
-| Tue | 12:00 PM | T1 (every week) | Local business shout-out (tag them), local list or local data hook |
-| Thu | 7:30 AM | Rotates T2 → T2 → T3 | Cost-of-missed-leads / owner checklist, then a result or offer every 3rd week (owners plan their week Mon–Thu) |
+| Tue | 6:00 PM AEST | T1 (every week) | Local business shout-out (tag them), local list or local data hook |
+| Thu | 6:00 PM AEST | Rotates T2 → T2 → T3 | Cost-of-missed-leads / owner checklist, then a result or offer every 3rd week (owners plan their week Mon–Thu) |
 
 Over a 3-week cycle that's 3×T1, 2×T2 and 1×T3, about 50/33/17. After 1,000 followers, change the rotation to T2 → T3.
 

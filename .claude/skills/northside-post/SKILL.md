@@ -5,7 +5,11 @@ description: Turn a one-line idea into a motion-graphics Reel for the Northside 
 
 # northside-post
 
-Strategy and calendar live in `northside/STRATEGY.md`. Read it before the first run in a session.
+Strategy and calendar live in `northside/STRATEGY.md`. Read it before the first run in a session, starting with its Correction section.
+
+Business facts come from the Master Brief (`MASTER-BRIEF.md` in Cooper's Drive, or uploaded in chat). Live data in Drive or Airtable beats the brief. The business sells Google Business Profile setup and Profile Care to owner-run trades and personal-care businesses in North Brisbane. Every post must follow the brief's hard rules (section 8): no promised rankings, calls or results, and no naming clients without written OK. Use Australian spelling and no jargon. The T3 CTA is always "Comment CHECK" for the free Listing Check. Times are Australia/Brisbane. Never commit the brief to this repo, because it holds lead phone numbers.
+
+Template: `northside/renders/2026-10-28-reviews-lose-the-job/` is the reference composition. Copy it for new posts, and use its `--variables` (trade, suburb, review counts) for niche variants.
 
 Constants:
 - Page: Northside Local, Facebook page ID `1401246633065923`
