@@ -1,2 +1,5 @@
 .DS_Store
 
+northside/renders/**/*.mp4
+northside/renders/**/.hyperframes/
+northside/renders/**/renders/
