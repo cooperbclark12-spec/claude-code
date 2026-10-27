@@ -26,7 +26,7 @@ Constants:
 8. **For T1 posts,** remind the user to share the Reel into 2–3 local groups and message the tagged business once it goes live.
 
 ## Mode B: plan next week
-Take 2 ideas (Tue T1, Thu per the T2 → T2 → T3 rotation), or generate them from the format lists in STRATEGY.md §1. Map them to the week's calendar slots and run Mode A steps 1–3 for each. Present both for **one** batch approval, then run steps 5–7 for the approved ones.
+Take 2 ideas (Tue T1, Thu per the T2 → T2 → T3 rotation), or generate them from the format lists in STRATEGY.md §1. Map them to the week's calendar slots and run Mode A steps 1–3 for each. Present both for **one** batch approval, then run steps 5–8 for the approved ones.
 
 ## Mode C: monthly report
 Run monthly. For each post in the log from the last 28 days, call `facebook_insights.postinsights_get` (`post_total_media_view_unique,post_clicks,post_reactions_by_type_total`). For the page, call `facebook_insights.insights_get` (`page_daily_follows_unique,page_post_engagements`, `date_preset=last_28d`). Report by tier: views, follows, DMs (ask the user), and calls booked. Apply the kill rules in STRATEGY.md §5 and recommend next month's mix.
