@@ -6,17 +6,17 @@ Your original request, sharpened. Use this version from now on when you brief Cl
 
 **Goal.** Grow the Northside Local Facebook page into a local audience I can turn into paying clients for my appointment-setting business. The number that counts is **booked sales calls per month from the page**. Followers only matter as the input to that.
 
-**Targets (90 days):**
-- 5,000 page followers, almost all inside the Northside service area
-- 5+ inbound DMs a week from local business owners
-- 4+ booked discovery calls a month that started on the page
+**Targets (90 days, at 2 posts a week):**
+- 1,000–1,500 page followers, almost all inside the Northside service area
+- 4+ inbound DMs a month from local business owners
+- 2+ booked discovery calls a month that started on the page
 
 **Content: three funnels.** Every post belongs to exactly one:
 1. **Reach (T1):** local hooks that get strangers to stop, engage and follow. No selling at all.
 2. **Interest (T2):** content that gets local business owners thinking about missed leads, slow follow-up and empty calendars, which is the problem I solve.
 3. **Convert (T3):** proof, offers and calls to action that turn a viewer into a booked call.
 
-**Mix:** 60% T1, 30% T2, 10% T3 at launch. Shift toward 50/30/20 after 1,000 followers.
+**Cadence and mix:** 2 Reels a week. Tuesday is always T1; Thursday rotates T2 → T2 → T3. Every T1 post also gets shared into local Facebook groups.
 
 **Production.** I send a one-line idea. Claude:
 1. picks the tier

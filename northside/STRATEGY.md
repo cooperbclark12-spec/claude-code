@@ -40,21 +40,21 @@ Page: **Northside Local** (Facebook page ID `1401246633065923`, reachable throug
 
 ## 2. Weekly calendar
 
-Default cadence: **1 Reel per day (7/week)**. Below about 4 a week, you won't have enough data to learn what works. Above 2 a day, quality drops and you'll burn out on approvals.
+Cadence: **2 Reels per week.** At this volume, each post has to do more work, and you need a way to spread posts beyond your own page (below).
 
 | Day | Slot (local time) | Tier | Format |
 |---|---|---|---|
-| Mon | 7:30 AM | T1 | Local data hook / "this week in Northside" |
-| Tue | 12:00 PM | T2 | Cost-of-missed-leads math |
-| Wed | 7:00 PM | T1 | Local business shout-out (tag them) |
-| Thu | 7:30 AM | T3 | Result breakdown or offer (owners plan their week Mon–Thu, so convert mid-week) |
-| Fri | 12:00 PM | T1 | Weekend events roundup |
-| Sat | 10:00 AM | T1 | This-or-that / list (weekend scrolling) |
-| Sun | 7:00 PM | T2 | Owner checklist / myth vs. reality (owners plan Monday on Sunday night) |
+| Tue | 12:00 PM | T1 (every week) | Local business shout-out (tag them), local list or local data hook |
+| Thu | 7:30 AM | Rotates T2 → T2 → T3 | Cost-of-missed-leads / owner checklist, then a result or offer every 3rd week (owners plan their week Mon–Thu) |
 
-That's 4×T1, 2×T2 and 1×T3, about 57/29/14. After 1,000 followers, swap Saturday to T3.
+Over a 3-week cycle that's 3×T1, 2×T2 and 1×T3, about 50/33/17. After 1,000 followers, change the rotation to T2 → T3.
 
-These slots are starting hypotheses based on common commute, lunch and evening scroll patterns. After 4 weeks, re-slot using your page's real `page_impressions` by hour from Page Insights.
+**Spreading each post (do this every time; it's what makes 2 posts a week workable):**
+- Share every T1 Reel into 2–3 local Northside Facebook groups (community, buy/sell, "what's happening" groups) right after it posts. For a local page, group shares are the biggest reach lever you control. Follow each group's self-promo rules or you'll get removed.
+- Tag every business you feature and message them: "Featured you on Northside Local". A good share of them reshare it to their own followers.
+- Pin your best T3 post to the top of the page so new followers see the offer first.
+
+These slots are starting guesses based on common commute, lunch and evening scroll patterns. After 6 weeks, move them based on your page's real views by hour from Page Insights.
 
 ## 3. Your schedule (fill in, then I'll re-fit the calendar)
 
@@ -62,13 +62,12 @@ You didn't give me your schedule, so this assumes you're setting full-time and p
 
 | Block | When | Time | What |
 |---|---|---|---|
-| Idea dump | Sunday | 15 min | Send 7 one-line ideas (or say "pick from backlog") |
-| Approval batch | Sunday | 20–30 min | Watch the 7 renders, approve or fix, and the pipeline schedules all 7 |
-| Comment replies | Daily, right after the post's slot | 10 min | Reply to every comment in the first hour, the biggest controllable distribution lever |
-| DM follow-up | Daily, end of setting shift | 10 min | Move DMs to a booked call. This is the money step. |
-| Weekly review | Sunday | 10 min | Read the auto-report and kill or double down on formats |
+| Ideas + approval | Sunday | 15 min | Send 2 one-line ideas (or say "pick for me"), watch the 2 renders and approve. The pipeline schedules both. |
+| Post-day engagement | Tue + Thu, right after the post goes up | 15 min | Share to local groups, message tagged businesses, reply to every comment in the first hour |
+| DM follow-up | Daily, end of setting shift | 5 min | Move DMs to a booked call. This is the money step. |
+| Monthly review | Last Sunday | 10 min | Read the auto-report and kill or double down on formats |
 
-**Total: about 2.5 hours a week.** If you can't commit to the daily comment and DM blocks, drop to 4 posts a week rather than posting into silence. Unanswered comments and DMs waste the reach.
+**Total: about 1–1.5 hours a week.** The two post-day blocks matter more than the videos do. Skip them and 2 posts a week won't grow the page.
 
 **Tell me:** your setting hours, your days off, and your time zone. I'll move the slots so none of them land when you can't reply in the first hour.
 
@@ -91,16 +90,18 @@ Porter capabilities verified on 2026-10-27:
 
 ## 5. Scorecard: review weekly, decide monthly
 
+Targets are set for 2 posts a week (about 24 posts in 90 days). These are my estimates, not benchmarks; adjust them after the first month of real data.
+
 | Metric | Source | Week 4 target | Week 12 target |
 |---|---|---|---|
-| Followers | `page_daily_follows_unique` | 500 | 5,000 |
-| Avg Reel views (T1) | `post_total_media_view_unique` | 1,000 | 5,000 |
-| Owner DMs/week | Manual tag in post-log | 1 | 5 |
-| Booked calls/month from page | Your CRM | 1 | 4 |
+| Followers | `page_daily_follows_unique` | 200 | 1,000–1,500 |
+| Avg Reel views (T1) | `post_total_media_view_unique` | 500 | 2,000 |
+| Owner DMs/month | Manual tag in post-log | 1 | 4 |
+| Booked calls/month from page | Your CRM | 0–1 | 2 |
 
-**Kill rules:**
+**Kill rules (judged monthly, since 2 posts a week means less data):**
 - Any format under 50% of your median views after 3 attempts gets dropped.
-- If T3 gets 0 DMs for 3 weeks straight, the offer is wrong, not the content. Rework the offer before you make more videos.
+- If 2 T3 posts in a row get 0 DMs, the offer is wrong, not the content. Rework the offer before you make more videos.
 
 ## 6. The honest bottom line
 
