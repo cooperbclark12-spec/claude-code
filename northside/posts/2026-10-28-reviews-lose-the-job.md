@@ -50,3 +50,15 @@
 - **Main metric:** CHECK comments or messages from business owners in the ICP. Each one is a reply. Your text reply rate is under 5%, so even 1–2 here is a better channel result.
 - **Secondary metric:** do live leads reply more after the 29–30 Oct follow-ups, now that the page has a real post on it? Note this in `/weekly-review`.
 - **Not tracked as wins:** views and likes from non-owners.
+
+## Voiceover script (timed to the video, about 85 words, calm and local, not salesy)
+
+| Time | Line |
+|---|---|
+| 0–3.4 s | "Your next customer just picked someone else." |
+| 3.4–7.5 s | "Someone in Bracken Ridge needs a plumber. Google shows them three." |
+| 7.5–10 s | "One of them is you." |
+| 10–14.4 s | "They called the one with sixty-three reviews." |
+| 14.4–19.4 s | "Your five stars didn't lose the job. Two reviews did. And no phone number." |
+| 19.4–26 s | "You never see that call. Miss one job a month like that… that's twelve a year." |
+| 26–33 s | "I'm Cooper, from Northside Local. Comment CHECK, and I'll send you a free check of your Google listing." |
