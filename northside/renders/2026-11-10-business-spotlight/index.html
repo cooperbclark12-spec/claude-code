@@ -1,0 +1,318 @@
+<!doctype html>
+<html
+  lang="en-AU"
+  data-resolution="portrait"
+  data-composition-variables='[
+    {"id":"number","type":"string","label":"Spotlight number","default":"1"},
+    {"id":"business","type":"string","label":"Business name","default":"BUSINESS NAME"},
+    {"id":"trade","type":"string","label":"What they do","default":"Trade"},
+    {"id":"suburb","type":"string","label":"Suburb","default":"Suburb"},
+    {"id":"rating","type":"string","label":"Google rating","default":"4.9"},
+    {"id":"reviews","type":"string","label":"Google review count","default":"00"},
+    {"id":"quote","type":"string","label":"Real review quote (short)","default":"PASTE A REAL REVIEW QUOTE HERE"},
+    {"id":"reviewer","type":"string","label":"Reviewer first name + initial","default":"Name X."}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="gsap.min.js"></script>
+    <style>
+      /* Same Northside Local palette as the Listing Check Reel. */
+      :root {
+        --ground: #0d1b2a;
+        --ground-2: #13263a;
+        --ink: #f7f5f0;
+        --ink-dark: #13202f;
+        --muted: #8fa1b7;
+        --amber: #f5b83d;
+        --font: "Inter", "DejaVu Sans", sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--ground);
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        font-family: var(--font);
+        color: var(--ink);
+        background: radial-gradient(1200px 900px at 50% 38%, var(--ground-2), var(--ground));
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+      }
+      #bug {
+        position: absolute;
+        top: 210px;
+        left: 80px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      #bug .dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--amber);
+      }
+      .eyebrow {
+        position: absolute;
+        left: 80px;
+        font-size: 38px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--amber);
+      }
+      .huge {
+        position: absolute;
+        left: 80px;
+        right: 120px;
+        font-size: 124px;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.045em;
+      }
+      .sub {
+        position: absolute;
+        left: 80px;
+        right: 120px;
+        font-size: 54px;
+        font-weight: 600;
+        color: var(--muted);
+        opacity: 0;
+      }
+      .sub b {
+        color: var(--ink);
+      }
+      #s1 .w {
+        display: inline-block;
+      }
+      #s1 .late {
+        opacity: 0;
+      }
+      #pin {
+        position: absolute;
+        left: 80px;
+        top: 560px;
+        width: 72px;
+        height: 72px;
+        border-radius: 50% 50% 50% 0;
+        background: var(--amber);
+        transform: rotate(-45deg);
+        opacity: 0;
+      }
+      #name {
+        opacity: 0;
+      }
+      #ratingRow {
+        position: absolute;
+        left: 80px;
+        top: 700px;
+        display: flex;
+        align-items: baseline;
+        gap: 30px;
+        opacity: 0;
+      }
+      #score {
+        font-size: 280px;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        line-height: 1;
+        color: var(--amber);
+      }
+      #stars {
+        font-family: "DejaVu Sans", sans-serif;
+        font-size: 84px;
+        color: var(--amber);
+        letter-spacing: 6px;
+      }
+      #from {
+        top: 1030px;
+      }
+      #quoteCard {
+        position: absolute;
+        left: 80px;
+        right: 140px;
+        top: 560px;
+        padding: 64px 60px;
+        border-radius: 40px;
+        background: var(--ink);
+        color: var(--ink-dark);
+        opacity: 0;
+      }
+      #quoteCard .mark {
+        font-size: 160px;
+        font-weight: 900;
+        line-height: 0.6;
+        color: #9a6b0c;
+        height: 70px;
+      }
+      #quote {
+        font-size: 60px;
+        font-weight: 700;
+        line-height: 1.18;
+        letter-spacing: -0.02em;
+      }
+      #reviewerLine {
+        margin-top: 36px;
+        font-size: 38px;
+        font-weight: 600;
+        color: #5c6b7d;
+      }
+      #reviewerLine .stars {
+        font-family: "DejaVu Sans", sans-serif;
+        color: #9a6b0c;
+        margin-right: 14px;
+      }
+      #tag {
+        opacity: 0;
+      }
+      #tagPill {
+        position: absolute;
+        left: 80px;
+        top: 1150px;
+        height: 140px;
+        padding: 0 60px;
+        border-radius: 70px;
+        background: var(--amber);
+        color: var(--ink-dark);
+        font-size: 60px;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1080" data-height="1920">
+      <div id="bugwrap" class="clip scene" data-start="0" data-duration="20" data-track-index="0">
+        <div id="bug"><span class="dot"></span>Northside Local</div>
+      </div>
+
+      <!-- Scene 1: hook, on screen from frame 0 for the thumbnail -->
+      <div id="s1" class="clip scene" data-start="0" data-duration="3.2" data-track-index="1">
+        <div class="eyebrow" style="top: 560px">Spotlight <span id="num1">#1</span></div>
+        <div class="huge" style="top: 640px">
+          <span class="w">Northside</span> <span class="w">Business</span>
+          <span class="w late" style="color: var(--amber)">Spotlight</span>
+        </div>
+        <div class="sub" id="hookSub" style="top: 1060px">The locals rate this one.</div>
+      </div>
+
+      <!-- Scene 2: who they are -->
+      <div id="s2" class="clip scene" data-start="3.2" data-duration="4.6" data-track-index="1">
+        <div id="pin"></div>
+        <div class="huge" id="name" style="top: 680px">BUSINESS NAME</div>
+        <div class="sub" id="what" style="top: 1000px"><b id="tradeTxt">Trade</b> · <span id="suburbTxt">Suburb</span></div>
+      </div>
+
+      <!-- Scene 3: the numbers -->
+      <div id="s3" class="clip scene" data-start="7.8" data-duration="4.4" data-track-index="1">
+        <div class="eyebrow" style="top: 600px">On Google</div>
+        <div id="ratingRow"><span id="score">0.0</span><span id="stars">★★★★★</span></div>
+        <div class="sub" id="from">from <b id="reviewsTxt">00</b> local reviews</div>
+      </div>
+
+      <!-- Scene 4: a real customer in their words -->
+      <div id="s4" class="clip scene" data-start="12.2" data-duration="4.4" data-track-index="1">
+        <div id="quoteCard" data-hold>
+          <div class="mark">“</div>
+          <div id="quote">PASTE A REAL REVIEW QUOTE HERE</div>
+          <div id="reviewerLine"><span class="stars">★★★★★</span><span id="reviewerTxt">Name X.</span>, Google review</div>
+        </div>
+      </div>
+
+      <!-- Scene 5: comment prompt -->
+      <div id="s5" class="clip scene" data-start="16.6" data-duration="3.4" data-track-index="1">
+        <div class="huge" id="tag" style="top: 640px; font-size: 96px">Know a northside business that deserves a shout-out?</div>
+        <div id="tagPill">Tag them below <span style="font-family: 'Noto Color Emoji'">👇</span></div>
+      </div>
+    </div>
+
+    <script>
+      const v = Object.assign(
+        {
+          number: "1",
+          business: "BUSINESS NAME",
+          trade: "Trade",
+          suburb: "Suburb",
+          rating: "4.9",
+          reviews: "00",
+          quote: "PASTE A REAL REVIEW QUOTE HERE",
+          reviewer: "Name X.",
+        },
+        window.__hyperframes && window.__hyperframes.getVariables ? window.__hyperframes.getVariables() : {}
+      );
+      const set = (id, text) => (document.getElementById(id).textContent = text);
+      set("num1", "#" + v.number);
+      set("name", v.business);
+      set("tradeTxt", v.trade);
+      set("suburbTxt", v.suburb);
+      set("reviewsTxt", v.reviews);
+      set("quote", v.quote);
+      set("reviewerTxt", v.reviewer);
+      // Long names get a smaller size so they stay on 2-3 lines.
+      if (v.business.length > 22) document.getElementById("name").style.fontSize = "96px";
+      if (v.quote.length > 90) document.getElementById("quote").style.fontSize = "50px";
+
+      const tl = gsap.timeline({ paused: true });
+      const rating = parseFloat(v.rating) || 0;
+      const rise = (sel, at) =>
+        tl.fromTo(sel, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, at);
+      const out = (sel, at) => tl.to(sel, { opacity: 0, y: -30, duration: 0.35, ease: "power2.in" }, at);
+
+      // Scene 1
+      tl.to("#bug .dot", { scale: 1.5, duration: 0.25, yoyo: true, repeat: 1, ease: "power2.out" }, 0.2);
+      tl.fromTo("#s1 .late", { opacity: 0, y: 60, scale: 1.2 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "power4.out" }, 0.5);
+      rise("#hookSub", 1.3);
+      out(["#s1 .eyebrow", "#s1 .huge", "#hookSub"], 2.85);
+
+      // Scene 2
+      tl.fromTo("#pin", { opacity: 0, y: -120 }, { opacity: 1, y: 0, duration: 0.5, ease: "bounce.out" }, 3.3);
+      tl.fromTo("#name", { opacity: 0, y: 60, scale: 1.08 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power4.out", transformOrigin: "left top" }, 3.6);
+      rise("#what", 4.3);
+      out(["#pin", "#name", "#what"], 7.45);
+
+      // Scene 3: rating counts up to the real figure, one decimal
+      rise("#s3 .eyebrow", 7.9);
+      tl.fromTo("#ratingRow", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 8.0);
+      tl.fromTo("#score", { innerText: 0 }, { innerText: rating, snap: { innerText: 0.1 }, duration: 1.3, ease: "power2.out" }, 8.1);
+      tl.fromTo("#stars", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 9.0);
+      rise("#from", 9.6);
+      out(["#s3 .eyebrow", "#ratingRow", "#from"], 11.85);
+
+      // Scene 4
+      tl.fromTo("#quoteCard", { opacity: 0, y: 80, rotation: -2 }, { opacity: 1, y: 0, rotation: 0, duration: 0.6, ease: "back.out(1.6)" }, 12.3);
+      out("#quoteCard", 16.25);
+
+      // Scene 5
+      rise("#tag", 16.7);
+      tl.fromTo("#tagPill", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2.2)", transformOrigin: "left center" }, 17.4);
+      tl.to("#tagPill", { scale: 1.06, duration: 0.4, yoyo: true, repeat: 3, ease: "sine.inOut", transformOrigin: "left center" }, 18.0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
