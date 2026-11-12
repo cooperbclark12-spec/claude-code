@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en-AU" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="gsap.min.js"></script>
+    <style>
+      /*
+        Spotlight v2. One journey: a Brisbane backyard (Queenslander on stumps, Hills hoist),
+        a dive through the lawn and soil, a fly-through inside the cracked pipe, the amber liner
+        sealing the walls, then the business, its rating and Helen's review.
+        The amber liner is the motif and the Northside Local accent.
+      */
+      :root {
+        --sky: #e6ecea;
+        --house: #c9d2cf;
+        --roof: #8f9a97;
+        --grass: #5d8a3e;
+        --grass-dark: #4a7231;
+        --soil: #5b3f2c;
+        --soil-deep: #3d2a1e;
+        --clay: #b9772f;
+        --root: #c9a27a;
+        --pipe-wall: #3a322c;
+        --pipe-ring: #6e6258;
+        --liner: #f5b83d;
+        --ink: #17202a;
+        --pale: #f5efe6;
+        --pale-2: #cdbba7;
+        --font: "Inter", "DejaVu Sans", sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--soil-deep);
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        font-family: var(--font);
+        color: var(--pale);
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .t {
+        position: absolute;
+        left: 80px;
+        right: 110px;
+        letter-spacing: -0.04em;
+        font-weight: 900;
+        line-height: 0.96;
+      }
+      .line {
+        display: block;
+      }
+      .w {
+        display: inline-block;
+      }
+      .body {
+        font-size: 52px;
+        font-weight: 600;
+        line-height: 1.22;
+        letter-spacing: -0.015em;
+      }
+      .amber {
+        color: var(--liner);
+      }
+
+      /* Brand mark: one line, sentence case */
+      #mark {
+        position: absolute;
+        top: 196px;
+        left: 80px;
+        font-size: 34px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        z-index: 20;
+      }
+
+      /* Film grain over everything, very light */
+      #grain {
+        position: absolute;
+        left: -200px;
+        top: -200px;
+        width: 1480px;
+        height: 2320px;
+        z-index: 30;
+        opacity: 0.07;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.2 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+      }
+      #flash {
+        position: absolute;
+        inset: 0;
+        background: #fff6e0;
+        opacity: 0;
+        z-index: 25;
+      }
+
+      /* Scene 1: the yard */
+      #yard {
+        position: absolute;
+        inset: 0;
+        transform-origin: 540px 1640px;
+      }
+      #hook {
+        top: 380px;
+        font-size: 128px;
+        color: var(--ink);
+      }
+
+      /* Scene 2: through the soil */
+      #s2 {
+        background: var(--soil);
+      }
+      .layer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 4800px;
+      }
+      #pipeEnd {
+        position: absolute;
+        left: 540px;
+        top: 960px;
+        width: 420px;
+        height: 420px;
+        margin: -210px 0 0 -210px;
+        border-radius: 50%;
+        background: var(--pipe-wall);
+        border: 34px solid #a3aaae;
+      }
+
+      /* Scene 3: inside the pipe */
+      #s3 {
+        background: var(--pipe-wall);
+      }
+      .ring {
+        position: absolute;
+        left: 540px;
+        top: 960px;
+        width: 900px;
+        height: 900px;
+        margin: -450px 0 0 -450px;
+        border-radius: 50%;
+        border: 10px solid var(--pipe-ring);
+      }
+      #crackRing {
+        position: absolute;
+        left: 540px;
+        top: 960px;
+        width: 900px;
+        height: 900px;
+        margin: -450px 0 0 -450px;
+      }
+      #linerSeal {
+        position: absolute;
+        left: 540px;
+        top: 960px;
+        width: 3400px;
+        height: 3400px;
+        margin: -1700px 0 0 -1700px;
+        border-radius: 50%;
+        border: 1250px solid var(--liner);
+      }
+      #pipeCopy1,
+      #pipeCopy2 {
+        font-size: 104px;
+      }
+      #pipeCopy1 {
+        top: 330px;
+      }
+      #pipeCopy2 {
+        top: 1430px;
+        color: var(--ink);
+      }
+
+      /* Scene 4: the business */
+      #s4 {
+        background: var(--soil-deep);
+      }
+      #name {
+        top: 560px;
+        font-size: 170px;
+        line-height: 0.9;
+      }
+      #where {
+        top: 1150px;
+        color: var(--pale-2);
+      }
+
+      /* Scene 5: rating */
+      #s5 {
+        background: var(--soil-deep);
+      }
+      #score {
+        top: 470px;
+        font-size: 420px;
+        letter-spacing: -0.06em;
+        color: var(--liner);
+      }
+      #stars {
+        position: absolute;
+        left: 80px;
+        top: 930px;
+        display: flex;
+        gap: 24px;
+      }
+      #reviewsLine {
+        top: 1100px;
+      }
+      #reviewsN {
+        color: var(--liner);
+        font-weight: 900;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Scene 6: Helen's review */
+      #s6 {
+        background: var(--soil-deep);
+      }
+      #quote {
+        top: 470px;
+        font-size: 92px;
+        line-height: 1.04;
+        letter-spacing: -0.035em;
+      }
+      #quote .line {
+        opacity: 0;
+      }
+      #who {
+        top: 1290px;
+        color: var(--pale-2);
+      }
+
+      /* Scene 7: end */
+      #s7 {
+        background: transparent;
+      }
+      #endSeal {
+        position: absolute;
+        left: 540px;
+        top: 960px;
+        width: 4200px;
+        height: 4200px;
+        margin: -2100px 0 0 -2100px;
+        border-radius: 50%;
+        border: 2100px solid var(--liner);
+      }
+      #endHead {
+        top: 470px;
+        font-size: 150px;
+        color: var(--ink);
+      }
+      #endSub {
+        top: 1020px;
+        color: var(--ink);
+        font-size: 58px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="25" data-width="1080" data-height="1920">
+      <!-- Scene 1: Brisbane backyard -->
+      <div id="s1" class="clip scene" data-start="0" data-duration="3.3" data-track-index="1" style="background: var(--sky)">
+        <div id="yard">
+          <svg width="1080" height="1920" viewBox="0 0 1080 1920" style="position: absolute; inset: 0">
+            <!-- Queenslander on stumps, back of the yard -->
+            <g id="house">
+              <polygon points="560,1060 820,930 1080,1060" fill="#8f9a97" />
+              <rect x="590" y="1060" width="460" height="230" fill="#c9d2cf" />
+              <rect x="590" y="1060" width="460" height="26" fill="#b5bfbc" />
+              <rect x="640" y="1120" width="90" height="110" fill="#9aa5a2" />
+              <rect x="790" y="1120" width="90" height="110" fill="#9aa5a2" />
+              <rect x="940" y="1120" width="70" height="110" fill="#9aa5a2" />
+              <rect x="610" y="1290" width="14" height="160" fill="#8f9a97" />
+              <rect x="760" y="1290" width="14" height="160" fill="#8f9a97" />
+              <rect x="910" y="1290" width="14" height="160" fill="#8f9a97" />
+              <rect x="1020" y="1290" width="14" height="160" fill="#8f9a97" />
+            </g>
+            <!-- Paling fence -->
+            <g fill="#a7a08f">
+              <rect x="0" y="1350" width="1080" height="110" />
+            </g>
+            <g fill="#958e7d" id="palings"></g>
+            <!-- Lawn -->
+            <rect x="0" y="1450" width="1080" height="470" fill="#5d8a3e" />
+            <rect x="0" y="1450" width="1080" height="20" fill="#4a7231" />
+            <!-- Hills hoist -->
+            <g id="hoist" stroke="#6b7577" stroke-linecap="round">
+              <line x1="270" y1="1640" x2="270" y2="1190" stroke-width="14" />
+              <line x1="80" y1="1240" x2="460" y2="1170" stroke-width="8" />
+              <line x1="130" y1="1170" x2="410" y2="1250" stroke-width="8" />
+              <line x1="120" y1="1235" x2="430" y2="1180" stroke-width="3" stroke="#8a9496" />
+              <line x1="155" y1="1185" x2="390" y2="1240" stroke-width="3" stroke="#8a9496" />
+            </g>
+            <!-- Where the pipe runs, a slightly sunken strip of lawn -->
+            <rect id="sunken" x="0" y="1630" width="1080" height="22" fill="#4a7231" />
+          </svg>
+        </div>
+        <div class="t" id="hook">
+          <span class="line"><span class="w">Broken</span> <span class="w">pipe.</span></span>
+          <span class="line"><span class="w">Lawn</span> <span class="w">stays.</span></span>
+        </div>
+      </div>
+
+      <!-- Scene 2: through the soil -->
+      <div id="s2" class="clip scene" data-start="3.3" data-duration="1.9" data-track-index="1">
+        <svg class="layer" id="farLayer" width="1080" height="4800" viewBox="0 0 1080 4800">
+          <g fill="#4e3626">
+            <ellipse cx="140" cy="400" rx="60" ry="34" /><ellipse cx="880" cy="900" rx="80" ry="40" />
+            <ellipse cx="420" cy="1500" rx="50" ry="30" /><ellipse cx="960" cy="2100" rx="70" ry="36" />
+            <ellipse cx="200" cy="2700" rx="64" ry="34" /><ellipse cx="700" cy="3300" rx="56" ry="30" />
+            <ellipse cx="120" cy="3900" rx="80" ry="40" /><ellipse cx="900" cy="4400" rx="60" ry="32" />
+          </g>
+        </svg>
+        <svg class="layer" id="nearLayer" width="1080" height="4800" viewBox="0 0 1080 4800">
+          <g fill="none" stroke="#c9a27a" stroke-linecap="round">
+            <path d="M90 0 C 140 300, 40 600, 160 900 C 220 1100, 120 1300, 180 1500" stroke-width="12" />
+            <path d="M160 900 C 260 980, 300 1050, 380 1080" stroke-width="6" />
+            <path d="M980 600 C 900 900, 1010 1300, 920 1700 C 880 1900, 960 2100, 900 2300" stroke-width="10" />
+            <path d="M920 1700 C 820 1760, 760 1800, 700 1880" stroke-width="5" />
+          </g>
+          <g fill="#3a281c">
+            <ellipse cx="620" cy="700" rx="40" ry="24" /><ellipse cx="300" cy="1900" rx="46" ry="26" />
+            <ellipse cx="780" cy="2600" rx="36" ry="22" /><ellipse cx="420" cy="3400" rx="50" ry="28" />
+          </g>
+        </svg>
+        <div id="pipeEnd"></div>
+      </div>
+
+      <!-- Scene 3: inside the pipe -->
+      <div id="s3" class="clip scene" data-start="5.2" data-duration="4.6" data-track-index="1">
+        <div class="ring" id="r0"></div>
+        <div class="ring" id="r1"></div>
+        <div class="ring" id="r2"></div>
+        <div class="ring" id="r3"></div>
+        <div class="ring" id="r4"></div>
+        <div class="ring" id="r5"></div>
+        <svg id="crackRing" width="900" height="900" viewBox="0 0 900 900">
+          <circle cx="450" cy="450" r="440" fill="none" stroke="#7a6d62" stroke-width="14" />
+          <polyline points="450,10 430,70 470,120 440,180 466,240" fill="none" stroke="#120d0a" stroke-width="12" stroke-linejoin="round" />
+          <path d="M452 0 C 420 90, 500 140, 456 230 C 430 290, 520 320, 500 400" fill="none" stroke="#c9a27a" stroke-width="16" stroke-linecap="round" />
+          <path d="M470 150 C 540 170, 580 200, 600 250" fill="none" stroke="#c9a27a" stroke-width="9" stroke-linecap="round" />
+          <polyline points="880,520 820,540 840,600 790,640" fill="none" stroke="#120d0a" stroke-width="10" stroke-linejoin="round" />
+        </svg>
+        <div id="linerSeal"></div>
+        <div class="t" id="pipeCopy1"><span class="w">Cracked.</span> <span class="w amber">Roots</span> <span class="w amber">inside.</span></div>
+        <div class="t" id="pipeCopy2"><span class="line">Relined from</span><span class="line">the inside.</span></div>
+      </div>
+
+      <!-- Scene 4: the business -->
+      <div id="s4" class="clip scene" data-start="9.8" data-duration="3.3" data-track-index="1">
+        <div class="t" id="name">
+          <span class="line"><span class="w">Pipe</span></span>
+          <span class="line"><span class="w">Relining</span></span>
+          <span class="line"><span class="w amber">Brisbane</span></span>
+        </div>
+        <div class="t body" id="where">Plumber, South Pine Road, Brendale</div>
+      </div>
+
+      <!-- Scene 5: the rating -->
+      <div id="s5" class="clip scene" data-start="13.1" data-duration="3.2" data-track-index="1">
+        <div class="t" id="score">5.0</div>
+        <div id="stars">
+          <svg class="st" width="112" height="108" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+          <svg class="st" width="112" height="108" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+          <svg class="st" width="112" height="108" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+          <svg class="st" width="112" height="108" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+          <svg class="st" width="112" height="108" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+        </div>
+        <div class="t body" id="reviewsLine">from <span id="reviewsN">0</span> Google reviews</div>
+      </div>
+
+      <!-- Scene 6: Helen's review, built phrase by phrase -->
+      <div id="s6" class="clip scene" data-start="16.3" data-duration="4.8" data-track-index="1">
+        <div class="t" id="quote">
+          <span class="line">“Fantastic service</span>
+          <span class="line">from <span class="amber">Michael and</span></span>
+          <span class="line"><span class="amber">his team.</span> They went</span>
+          <span class="line"><span class="amber">above and beyond</span></span>
+          <span class="line">to fix our difficult</span>
+          <span class="line">problem.”</span>
+        </div>
+        <div class="t body" id="who">Helen M., Google review</div>
+      </div>
+
+      <!-- Scene 7: end card, the liner closes in -->
+      <div id="s7" class="clip scene" data-start="21.1" data-duration="3.9" data-track-index="1">
+        <div id="endSeal"></div>
+        <div class="t" id="endHead"><span class="line">Northside</span><span class="line">Business</span><span class="line">Spotlight</span></div>
+        <div class="t body" id="endSub">Know a northside business that deserves one? Tag them below.</div>
+      </div>
+
+      <div id="overlay" class="clip" data-start="0" data-duration="25" data-track-index="0" style="position: absolute; inset: 0; pointer-events: none">
+        <div id="mark">Northside Local</div>
+        <div id="flash"></div>
+        <div id="grain"></div>
+      </div>
+    </div>
+
+    <script>
+      // Fence palings, generated once at setup (deterministic).
+      const palings = document.getElementById("palings");
+      for (let x = 0; x < 1080; x += 36) {
+        const r = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        r.setAttribute("x", x + 30);
+        r.setAttribute("y", 1340);
+        r.setAttribute("width", 5);
+        r.setAttribute("height", 120);
+        palings.appendChild(r);
+      }
+
+      const tl = gsap.timeline({ paused: true });
+      const rise = (sel, at, extra) =>
+        tl.fromTo(sel, { opacity: 0, y: 40 }, Object.assign({ opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, extra), at);
+      const shake = (sel, at, amt) =>
+        tl.fromTo(sel, { x: 0 }, { x: amt || 10, duration: 0.05, yoyo: true, repeat: 3, ease: "none" }, at);
+
+      // Grain flickers through fixed offsets (no randomness).
+      const offs = [[0, 0], [-60, 40], [30, -80], [-110, -20], [70, 60], [-20, 110], [100, -50], [-80, -100]];
+      for (let i = 0; i < 25 / 0.083; i++) {
+        const o = offs[i % offs.length];
+        tl.set("#grain", { x: o[0], y: o[1] }, i * 0.083);
+      }
+
+      // Scene 1: the hook. "Broken pipe." is on screen at frame 0 (thumbnail); the second line slams in.
+      tl.fromTo("#hook .line:nth-child(2) .w", { opacity: 0, y: 80, scale: 1.25 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, stagger: 0.16, ease: "power4.out" }, 0.55);
+      tl.fromTo("#yard", { scale: 1 }, { scale: 1.06, duration: 2.6, ease: "none" }, 0);
+      tl.fromTo("#sunken", { opacity: 1 }, { opacity: 0.4, duration: 0.3, yoyo: true, repeat: 3 }, 1.4);
+      // Dive: push into the lawn, text and yard rush up and out
+      tl.to("#hook", { y: -500, opacity: 0, duration: 0.55, ease: "power3.in" }, 2.6);
+      tl.to("#yard", { scale: 7, duration: 0.75, ease: "power3.in" }, 2.6);
+
+      // Scene 2: falling through the soil (two speeds = depth), then the pipe end rushes at camera
+      tl.fromTo("#farLayer", { y: 0 }, { y: -1700, duration: 1.9, ease: "power1.out" }, 3.3);
+      tl.fromTo("#nearLayer", { y: 0 }, { y: -3200, duration: 1.9, ease: "power1.out" }, 3.3);
+      tl.fromTo("#pipeEnd", { scale: 0.2, y: 700 }, { scale: 1, y: 0, duration: 0.9, ease: "power3.out" }, 3.6);
+      tl.to("#pipeEnd", { scale: 9, duration: 0.6, ease: "power3.in" }, 4.6);
+      tl.to("#mark", { color: "#f5efe6", duration: 0.2 }, 3.3);
+
+      // Scene 3: fly-through. Each ring travels from the far end to past the camera.
+      const rings = ["#r0", "#r1", "#r2", "#r3", "#r4", "#r5"];
+      rings.forEach((r, i) => {
+        tl.fromTo(r, { scale: 0.06, opacity: 0 }, { scale: 3.2, opacity: 1, duration: 1.4, ease: "power2.in", repeat: 1 }, 5.2 + i * 0.23);
+      });
+      // Camera slows: the cracked section arrives and stops in front of us
+      tl.fromTo("#crackRing", { scale: 0.05, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.6, ease: "power3.out" }, 5.5);
+      tl.fromTo("#pipeCopy1 .w", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.18, ease: "power3.out" }, 6.2);
+      shake("#crackRing", 6.9, 6);
+      // The liner presses in from the walls and seals the crack and roots
+      tl.to("#pipeCopy1", { opacity: 0, duration: 0.25 }, 7.4);
+      tl.fromTo("#linerSeal", { scale: 4 }, { scale: 1, duration: 0.9, ease: "power3.inOut" }, 7.5);
+      tl.to("#crackRing", { opacity: 0, duration: 0.2 }, 8.25);
+      tl.fromTo("#pipeCopy2 .line", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.45, stagger: 0.15, ease: "power3.out" }, 8.3);
+      tl.to("#mark", { color: "#17202a", duration: 0.2 }, 7.9);
+      // Flash out of the pipe
+      tl.fromTo("#flash", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.in" }, 9.62);
+      tl.to("#flash", { opacity: 0, duration: 0.45, ease: "power2.out" }, 9.8);
+      tl.to("#mark", { color: "#f5efe6", duration: 0.01 }, 9.8);
+
+      // Scene 4: the name slams in a word at a time
+      tl.fromTo("#name .w", { opacity: 0, scale: 1.6, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.32, stagger: 0.28, ease: "power4.out", transformOrigin: "left center" }, 9.95);
+      shake("#name", 10.3, 8);
+      shake("#name", 10.58, 8);
+      shake("#name", 10.86, 12);
+      rise("#where", 11.3);
+      tl.to(["#name", "#where"], { opacity: 0, y: -40, duration: 0.3, ease: "power2.in" }, 12.8);
+
+      // Scene 5: rating, stars stamp in, the review count rolls up
+      tl.fromTo("#score", { opacity: 0, scale: 1.4, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: "power4.out", transformOrigin: "left bottom" }, 13.15);
+      tl.fromTo("#stars .st", { opacity: 0, scale: 2.2, rotation: -20 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.28, stagger: 0.14, ease: "back.out(2)" }, 13.6);
+      shake("#score", 14.2, 6);
+      tl.fromTo("#reviewsLine", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 14.3);
+      tl.fromTo("#reviewsN", { innerText: 0 }, { innerText: 21, snap: { innerText: 1 }, duration: 0.9, ease: "power2.out" }, 14.35);
+      tl.to(["#score", "#stars", "#reviewsLine"], { opacity: 0, y: -40, duration: 0.3, ease: "power2.in" }, 16.0);
+
+      // Scene 6: the review, phrase by phrase at reading pace
+      tl.fromTo("#quote .line", { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.42, ease: "power3.out" }, 16.4);
+      rise("#who", 19.0);
+      tl.to(["#quote", "#who"], { opacity: 0, duration: 0.3 }, 20.8);
+
+      // Scene 7: the liner closes in one last time and becomes the end card
+      tl.fromTo("#endSeal", { scale: 1.6 }, { scale: 1, duration: 0.7, ease: "power3.inOut" }, 21.1);
+      tl.to("#mark", { color: "#17202a", duration: 0.15 }, 21.5);
+      tl.fromTo("#endHead .line", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.12, ease: "power4.out" }, 21.6);
+      rise("#endSub", 22.1);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
