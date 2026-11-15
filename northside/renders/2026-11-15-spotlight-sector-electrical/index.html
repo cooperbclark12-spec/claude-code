@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en-AU" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="gsap.min.js"></script>
+    <style>
+      /*
+        Spotlight #2. A cold Bracken Ridge night, a Queenslander whose windows warm up one by one,
+        then a cut-through of the house: ducting in the ceiling, warm air running to every room.
+        Then the business, its rating and Emily's review. Amber is warmth and the Northside accent.
+      */
+      :root {
+        --night: #1b2633;
+        --night-2: #243243;
+        --house: #3a4a5c;
+        --roof: #2c3947;
+        --window-cold: #2e3d4f;
+        --warm: #f5b83d;
+        --cavity: #2a2420;
+        --timber: #8a6a4a;
+        --duct: #c7ccd0;
+        --room-cold: #5f7486;
+        --room-warm: #e9c58a;
+        --ink: #17202a;
+        --pale: #f5efe6;
+        --pale-2: #b9c3cc;
+        --font: "Inter", "DejaVu Sans", sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--night);
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        font-family: var(--font);
+        color: var(--pale);
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .t {
+        position: absolute;
+        left: 80px;
+        right: 110px;
+        letter-spacing: -0.04em;
+        font-weight: 900;
+        line-height: 0.96;
+      }
+      .line {
+        display: block;
+      }
+      .w {
+        display: inline-block;
+      }
+      .body {
+        font-size: 52px;
+        font-weight: 600;
+        line-height: 1.22;
+        letter-spacing: -0.015em;
+      }
+      .amber {
+        color: var(--warm);
+      }
+      #mark {
+        position: absolute;
+        top: 196px;
+        left: 80px;
+        font-size: 34px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        color: var(--pale);
+        z-index: 20;
+      }
+      #grain {
+        position: absolute;
+        left: -200px;
+        top: -200px;
+        width: 1480px;
+        height: 2320px;
+        z-index: 30;
+        opacity: 0.07;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.2 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+      }
+      #flash {
+        position: absolute;
+        inset: 0;
+        background: #fff6e0;
+        opacity: 0;
+        z-index: 25;
+      }
+
+      /* Scene 1 */
+      #s1 {
+        background: var(--night);
+      }
+      #street {
+        position: absolute;
+        inset: 0;
+        transform-origin: 700px 1060px;
+      }
+      #hook {
+        top: 380px;
+        font-size: 132px;
+      }
+
+      /* Scene 2: cut-through */
+      #s2 {
+        background: var(--night-2);
+      }
+      #cut {
+        position: absolute;
+        inset: 0;
+      }
+      .room {
+        fill: var(--room-cold);
+      }
+      #ductCopy1 {
+        top: 330px;
+        font-size: 104px;
+      }
+      #ductCopy2 {
+        top: 1520px;
+        font-size: 96px;
+        color: var(--ink);
+      }
+
+      /* Scene 3 */
+      #s3,
+      #s4,
+      #s5 {
+        background: var(--night);
+      }
+      #name {
+        top: 560px;
+        font-size: 176px;
+        line-height: 0.9;
+      }
+      #where {
+        top: 1000px;
+        color: var(--pale-2);
+      }
+
+      /* Scene 4 */
+      #score {
+        top: 470px;
+        font-size: 420px;
+        letter-spacing: -0.06em;
+        color: var(--warm);
+      }
+      #stars {
+        position: absolute;
+        left: 80px;
+        top: 930px;
+        display: flex;
+        gap: 24px;
+      }
+      .partial {
+        position: relative;
+        width: 112px;
+        height: 108px;
+      }
+      .partial svg {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      .partial .fillpart {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 82px;
+        height: 108px;
+        overflow: hidden;
+      }
+      #reviewsLine {
+        top: 1100px;
+      }
+      #reviewsN {
+        color: var(--warm);
+        font-weight: 900;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Scene 5 */
+      #quote {
+        top: 360px;
+        font-size: 78px;
+        line-height: 1.04;
+        letter-spacing: -0.035em;
+      }
+      #quote .line {
+        opacity: 0;
+      }
+      #who {
+        top: 1360px;
+        color: var(--pale-2);
+      }
+
+      /* Scene 6 */
+      #endSeal {
+        position: absolute;
+        left: 540px;
+        top: 960px;
+        width: 4200px;
+        height: 4200px;
+        margin: -2100px 0 0 -2100px;
+        border-radius: 50%;
+        border: 2100px solid var(--warm);
+      }
+      #endHead {
+        top: 470px;
+        font-size: 150px;
+        color: var(--ink);
+      }
+      #endSub {
+        top: 1020px;
+        color: var(--ink);
+        font-size: 58px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="27.5" data-width="1080" data-height="1920">
+      <!-- Scene 1: a cold Bracken Ridge night -->
+      <div id="s1" class="clip scene" data-start="0" data-duration="3.4" data-track-index="1">
+        <div id="street">
+          <svg width="1080" height="1920" viewBox="0 0 1080 1920" style="position: absolute; inset: 0">
+            <circle cx="975" cy="640" r="40" fill="#d9dee3" />
+            <g fill="#cfd6dd">
+              <circle cx="180" cy="760" r="3" /><circle cx="420" cy="690" r="2.5" /><circle cx="980" cy="820" r="3" />
+              <circle cx="640" cy="760" r="2" /><circle cx="300" cy="880" r="2" />
+            </g>
+            <!-- Queenslander on stumps -->
+            <polygon points="300,900 700,700 1100,900" fill="#2c3947" />
+            <rect x="350" y="900" width="700" height="330" fill="#3a4a5c" />
+            <rect x="350" y="900" width="700" height="30" fill="#33424f" />
+            <rect class="win" x="420" y="990" width="120" height="150" fill="#2e3d4f" />
+            <rect class="win" x="640" y="990" width="120" height="150" fill="#2e3d4f" />
+            <rect class="win" x="860" y="990" width="120" height="150" fill="#2e3d4f" />
+            <g fill="#2c3947">
+              <rect x="380" y="1230" width="16" height="190" /><rect x="600" y="1230" width="16" height="190" />
+              <rect x="820" y="1230" width="16" height="190" /><rect x="1010" y="1230" width="16" height="190" />
+            </g>
+            <!-- Stairs -->
+            <polygon points="250,1420 360,1230 400,1230 290,1420" fill="#33424f" />
+            <!-- Ground and fence -->
+            <rect x="0" y="1400" width="1080" height="520" fill="#22303d" />
+            <rect x="0" y="1300" width="300" height="110" fill="#2a3846" />
+          </svg>
+        </div>
+        <div class="t" id="hook">
+          <span class="line"><span class="w">Cold</span> <span class="w">night.</span></span>
+          <span class="line"><span class="w amber">Warm</span> <span class="w amber">house.</span></span>
+        </div>
+      </div>
+
+      <!-- Scene 2: inside the ceiling, warm air to every room -->
+      <div id="s2" class="clip scene" data-start="3.4" data-duration="5.3" data-track-index="1">
+        <svg id="cut" width="1080" height="1920" viewBox="0 0 1080 1920">
+          <!-- Roof cavity -->
+          <polygon points="0,780 540,560 1080,780 1080,980 0,980" fill="#2a2420" />
+          <g stroke="#8a6a4a" stroke-width="14">
+            <line x1="0" y1="980" x2="1080" y2="980" />
+            <line x1="200" y1="700" x2="200" y2="980" />
+            <line x1="540" y1="560" x2="540" y2="980" />
+            <line x1="880" y1="700" x2="880" y2="980" />
+          </g>
+          <!-- Rooms -->
+          <rect class="room" id="room1" x="0" y="994" width="530" height="440" />
+          <rect class="room" id="room2" x="550" y="994" width="530" height="440" />
+          <rect x="530" y="994" width="20" height="440" fill="#8a6a4a" />
+          <rect x="0" y="1434" width="1080" height="20" fill="#8a6a4a" />
+          <g fill="#3a4a5c" opacity="0.55">
+            <rect x="90" y="1300" width="300" height="90" rx="18" />
+            <rect x="90" y="1250" width="60" height="140" rx="16" />
+            <rect x="330" y="1250" width="60" height="140" rx="16" />
+            <rect x="640" y="1310" width="360" height="80" rx="10" />
+            <rect x="640" y="1250" width="90" height="140" rx="10" />
+          </g>
+          <g fill="#2c3947">
+            <rect x="60" y="1454" width="22" height="230" /><rect x="360" y="1454" width="22" height="230" />
+            <rect x="700" y="1454" width="22" height="230" /><rect x="1000" y="1454" width="22" height="230" />
+          </g>
+          <rect x="0" y="1684" width="1080" height="236" fill="#1b2633" />
+          <!-- Duct: main run plus two drops to ceiling vents -->
+          <g fill="#c7ccd0">
+            <rect x="60" y="860" width="960" height="72" rx="36" />
+            <rect x="230" y="900" width="60" height="96" />
+            <rect x="790" y="900" width="60" height="96" />
+          </g>
+          <g fill="#9aa1a6">
+            <rect x="200" y="980" width="120" height="22" />
+            <rect x="760" y="980" width="120" height="22" />
+          </g>
+          <!-- Warm air: amber dashes travelling along the duct -->
+          <clipPath id="ductClip"><rect x="60" y="860" width="960" height="72" rx="36" /></clipPath>
+          <g clip-path="url(#ductClip)">
+            <g id="air">
+              <rect x="-400" y="884" width="70" height="24" rx="12" fill="#f5b83d" />
+              <rect x="-260" y="884" width="70" height="24" rx="12" fill="#f5b83d" />
+              <rect x="-120" y="884" width="70" height="24" rx="12" fill="#f5b83d" />
+              <rect x="20" y="884" width="70" height="24" rx="12" fill="#f5b83d" />
+              <rect x="160" y="884" width="70" height="24" rx="12" fill="#f5b83d" />
+              <rect x="300" y="884" width="70" height="24" rx="12" fill="#f5b83d" />
+              <rect x="440" y="884" width="70" height="24" rx="12" fill="#f5b83d" />
+              <rect x="580" y="884" width="70" height="24" rx="12" fill="#f5b83d" />
+              <rect x="720" y="884" width="70" height="24" rx="12" fill="#f5b83d" />
+              <rect x="860" y="884" width="70" height="24" rx="12" fill="#f5b83d" />
+              <rect x="1000" y="884" width="70" height="24" rx="12" fill="#f5b83d" />
+            </g>
+          </g>
+          <!-- Warm air coming out of each vent -->
+          <g id="breath1" fill="none" stroke="#f5b83d" stroke-width="10" stroke-linecap="round" opacity="0">
+            <path d="M225 1040 C 205 1080, 245 1110, 225 1150" />
+            <path d="M260 1040 C 240 1080, 280 1110, 260 1150" />
+            <path d="M295 1040 C 275 1080, 315 1110, 295 1150" />
+          </g>
+          <g id="breath2" fill="none" stroke="#f5b83d" stroke-width="10" stroke-linecap="round" opacity="0">
+            <path d="M785 1040 C 765 1080, 805 1110, 785 1150" />
+            <path d="M820 1040 C 800 1080, 840 1110, 820 1150" />
+            <path d="M855 1040 C 835 1080, 875 1110, 855 1150" />
+          </g>
+        </svg>
+        <div class="t" id="ductCopy1"><span class="w">Ducted</span> <span class="w amber">air</span> <span class="w amber">con.</span></div>
+        <div class="t" id="ductCopy2" style="color: var(--pale)"><span class="line">The whole house,</span><span class="line amber">warm.</span></div>
+      </div>
+
+      <!-- Scene 3: the business -->
+      <div id="s3" class="clip scene" data-start="8.7" data-duration="3.3" data-track-index="1">
+        <div class="t" id="name">
+          <span class="line"><span class="w">Sector</span></span>
+          <span class="line"><span class="w amber">Electrical</span></span>
+        </div>
+        <div class="t body" id="where">Electrician, Bracken Ridge</div>
+      </div>
+
+      <!-- Scene 4: the rating -->
+      <div id="s4" class="clip scene" data-start="12" data-duration="3.2" data-track-index="1">
+        <div class="t" id="score">4.8</div>
+        <div id="stars">
+          <svg class="st" width="112" height="108" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+          <svg class="st" width="112" height="108" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+          <svg class="st" width="112" height="108" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+          <svg class="st" width="112" height="108" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+          <div class="st partial">
+            <svg width="112" height="108" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#3a4a5c" /></svg>
+            <div class="fillpart"><svg width="112" height="108" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg></div>
+          </div>
+        </div>
+        <div class="t body" id="reviewsLine">from <span id="reviewsN">0</span> Google reviews</div>
+      </div>
+
+      <!-- Scene 5: Emily's review (trimmed with an ellipsis, words unchanged) -->
+      <div id="s5" class="clip scene" data-start="15.2" data-duration="8.4" data-track-index="1">
+        <div class="t" id="quote">
+          <span class="line">“<span class="amber">Evan</span> recently</span>
+          <span class="line">installed our ducted</span>
+          <span class="line">air conditioning and</span>
+          <span class="line">this winter has been</span>
+          <span class="line">so comfortable…</span>
+          <span class="line">Thank you <span class="amber">Evan</span> for</span>
+          <span class="line">getting this done</span>
+          <span class="line">so quickly and on</span>
+          <span class="line">such short notice!”</span>
+        </div>
+        <div class="t body" id="who">Emily W., Google review</div>
+      </div>
+
+      <!-- Scene 6: end card -->
+      <div id="s6" class="clip scene" data-start="23.6" data-duration="3.9" data-track-index="1">
+        <div id="endSeal"></div>
+        <div class="t" id="endHead"><span class="line">Northside</span><span class="line">Business</span><span class="line">Spotlight</span></div>
+        <div class="t body" id="endSub">Know a northside business that deserves one? Tag them below.</div>
+      </div>
+
+      <div id="overlay" class="clip" data-start="0" data-duration="27.5" data-track-index="0" style="position: absolute; inset: 0; pointer-events: none">
+        <div id="mark">Northside Local</div>
+        <div id="flash"></div>
+        <div id="grain"></div>
+      </div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const rise = (sel, at) =>
+        tl.fromTo(sel, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, at);
+      const shake = (sel, at, amt) =>
+        tl.fromTo(sel, { x: 0 }, { x: amt || 10, duration: 0.05, yoyo: true, repeat: 3, ease: "none" }, at);
+
+      const offs = [[0, 0], [-60, 40], [30, -80], [-110, -20], [70, 60], [-20, 110], [100, -50], [-80, -100]];
+      for (let i = 0; i < 27.5 / 0.083; i++) {
+        const o = offs[i % offs.length];
+        tl.set("#grain", { x: o[0], y: o[1] }, i * 0.083);
+      }
+
+      // Scene 1: "Cold night." is on screen at frame 0; the windows warm up one by one, then "Warm house."
+      tl.fromTo("#street", { scale: 1 }, { scale: 1.05, duration: 2.7, ease: "none" }, 0);
+      tl.fromTo(".win", { fill: "#2e3d4f" }, { fill: "#f5b83d", duration: 0.25, stagger: 0.28, ease: "power2.out" }, 0.6);
+      tl.fromTo("#hook .line:nth-child(2) .w", { opacity: 0, y: 80, scale: 1.25 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, stagger: 0.16, ease: "power4.out" }, 1.4);
+      // Push into the house
+      tl.to("#hook", { y: -500, opacity: 0, duration: 0.5, ease: "power3.in" }, 2.75);
+      tl.to("#street", { scale: 6, duration: 0.7, ease: "power3.in" }, 2.75);
+      tl.to("#flash", { opacity: 0.85, duration: 0.15 }, 3.3);
+      tl.to("#flash", { opacity: 0, duration: 0.35 }, 3.45);
+
+      // Scene 2: air runs through the duct, rooms warm up, vents breathe
+      tl.fromTo("#cut", { scale: 1.12 }, { scale: 1, duration: 1.0, ease: "power3.out", transformOrigin: "540px 900px" }, 3.4);
+      tl.fromTo("#ductCopy1 .w", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.16, ease: "power3.out" }, 3.9);
+      tl.fromTo("#air", { x: 0 }, { x: 560, duration: 1.3, ease: "none", repeat: 3 }, 4.2);
+      tl.fromTo("#breath1", { opacity: 0, y: 0 }, { opacity: 1, y: 20, duration: 0.6, yoyo: true, repeat: 5, ease: "sine.inOut" }, 4.9);
+      tl.fromTo("#breath2", { opacity: 0, y: 0 }, { opacity: 1, y: 20, duration: 0.6, yoyo: true, repeat: 5, ease: "sine.inOut" }, 5.2);
+      tl.fromTo("#room1", { fill: "#5f7486" }, { fill: "#e9c58a", duration: 1.2, ease: "power1.inOut" }, 5.1);
+      tl.fromTo("#room2", { fill: "#5f7486" }, { fill: "#e9c58a", duration: 1.2, ease: "power1.inOut" }, 5.4);
+      tl.fromTo("#ductCopy2 .line", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.45, stagger: 0.18, ease: "power3.out" }, 6.4);
+      tl.to(["#ductCopy1", "#ductCopy2"], { opacity: 0, duration: 0.3 }, 8.3);
+      tl.to("#flash", { opacity: 1, duration: 0.16, ease: "power2.in" }, 8.55);
+      tl.to("#flash", { opacity: 0, duration: 0.45, ease: "power2.out" }, 8.71);
+
+      // Scene 3: the name slams in
+      tl.fromTo("#name .w", { opacity: 0, scale: 1.6, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.32, stagger: 0.32, ease: "power4.out", transformOrigin: "left center" }, 8.85);
+      shake("#name", 9.2, 8);
+      shake("#name", 9.52, 12);
+      rise("#where", 10.0);
+      tl.to(["#name", "#where"], { opacity: 0, y: -40, duration: 0.3, ease: "power2.in" }, 11.7);
+
+      // Scene 4: rating
+      tl.fromTo("#score", { opacity: 0, scale: 1.4, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: "power4.out", transformOrigin: "left bottom" }, 12.05);
+      tl.fromTo("#stars .st", { opacity: 0, scale: 2.2, rotation: -20 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.28, stagger: 0.14, ease: "back.out(2)" }, 12.5);
+      shake("#score", 13.1, 6);
+      tl.fromTo("#reviewsLine", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 13.2);
+      tl.fromTo("#reviewsN", { innerText: 0 }, { innerText: 19, snap: { innerText: 1 }, duration: 0.9, ease: "power2.out" }, 13.25);
+      tl.to(["#score", "#stars", "#reviewsLine"], { opacity: 0, y: -40, duration: 0.3, ease: "power2.in" }, 14.9);
+
+      // Scene 5: the review at reading pace
+      tl.fromTo("#quote .line", { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.55, ease: "power3.out" }, 15.3);
+      rise("#who", 20.0);
+      tl.to(["#quote", "#who"], { opacity: 0, duration: 0.3 }, 23.3);
+
+      // Scene 6: warmth closes in and becomes the end card
+      tl.fromTo("#endSeal", { scale: 1.6 }, { scale: 1, duration: 0.7, ease: "power3.inOut" }, 23.6);
+      tl.to("#mark", { color: "#17202a", duration: 0.15 }, 24.0);
+      tl.fromTo("#endHead .line", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.12, ease: "power4.out" }, 24.1);
+      rise("#endSub", 24.6);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
