@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en-AU" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="gsap.min.js"></script>
+    <style>
+      /*
+        One take: the camera starts above ground in a backyard, drops through the soil to a
+        cracked pipe, watches it get relined, and keeps going down. Colours come from the
+        subject: pale yard, Brisbane grass, soil, grey pipe, and the amber liner, which is
+        also the Northside Local accent.
+      */
+      :root {
+        --air: #ece8df;
+        --grass: #4e7a3a;
+        --soil: #5b3f2c;
+        --soil-deep: #3f2b1f;
+        --stone: #4a3324;
+        --pipe: #a3aaae;
+        --pipe-inside: #241d19;
+        --liner: #f5b83d;
+        --ink: #17202a;
+        --pale: #f3ede4;
+        --muted-pale: #c9b8a6;
+        --font: "Inter", "DejaVu Sans", sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--soil);
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        font-family: var(--font);
+      }
+      #world {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 7680px;
+      }
+      .band {
+        position: absolute;
+        left: 0;
+        width: 1080px;
+      }
+      .t {
+        position: absolute;
+        left: 80px;
+        right: 120px;
+        letter-spacing: -0.035em;
+      }
+      .display {
+        font-size: 150px;
+        font-weight: 900;
+        line-height: 0.95;
+      }
+      .name {
+        font-size: 112px;
+        font-weight: 900;
+        line-height: 0.98;
+        color: var(--pale);
+      }
+      .body {
+        font-size: 50px;
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: -0.015em;
+      }
+
+      /* Brand mark, sentence case, colour follows the ground behind it */
+      #mark {
+        position: absolute;
+        top: 200px;
+        left: 80px;
+        font-size: 34px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        z-index: 5;
+      }
+
+      /* Pipe */
+      #pipe {
+        position: absolute;
+        left: -20px;
+        width: 1120px;
+        top: 2560px;
+        height: 250px;
+        background: var(--pipe);
+      }
+      #pipeInside {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 38px;
+        bottom: 38px;
+        background: var(--pipe-inside);
+        overflow: hidden;
+      }
+      #liner {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: var(--liner);
+        transform-origin: left center;
+      }
+      #crack,
+      #root-intrusion {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      /* Rating */
+      #score {
+        font-size: 380px;
+        font-weight: 900;
+        letter-spacing: -0.06em;
+        line-height: 1;
+        color: var(--liner);
+        font-variant-numeric: tabular-nums;
+      }
+      #stars {
+        position: absolute;
+        left: 80px;
+        display: flex;
+        gap: 22px;
+      }
+
+      /* End card: the liner colour fills the screen */
+      #fill {
+        position: absolute;
+        inset: 0;
+        background: var(--liner);
+        transform-origin: center bottom;
+        z-index: 3;
+      }
+      #end {
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        color: var(--ink);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="26.5" data-width="1080" data-height="1920">
+      <div id="scene" class="clip" data-start="0" data-duration="26.5" data-track-index="0" style="position: absolute; inset: 0">
+        <div id="world">
+          <!-- Ground layers -->
+          <div class="band" style="top: 0; height: 1650px; background: var(--air)"></div>
+          <div class="band" style="top: 1650px; height: 60px; background: var(--grass)"></div>
+          <div class="band" style="top: 1710px; height: 3590px; background: var(--soil)"></div>
+          <div class="band" style="top: 5300px; height: 2380px; background: var(--soil-deep)"></div>
+
+          <!-- A few stones in the soil, placed by hand so every render is identical -->
+          <svg class="band" style="top: 1710px; height: 5970px" width="1080" height="5970" viewBox="0 0 1080 5970">
+            <g fill="#4a3324">
+              <ellipse cx="160" cy="210" rx="34" ry="22" />
+              <ellipse cx="930" cy="430" rx="46" ry="28" />
+              <ellipse cx="760" cy="1420" rx="30" ry="20" />
+              <ellipse cx="120" cy="1640" rx="52" ry="30" />
+              <ellipse cx="980" cy="2420" rx="38" ry="24" />
+            </g>
+            <g fill="#33231a">
+              <ellipse cx="930" cy="3420" rx="44" ry="26" />
+              <ellipse cx="900" cy="3600" rx="36" ry="22" />
+              <ellipse cx="560" cy="4950" rx="48" ry="28" />
+            </g>
+          </svg>
+
+          <!-- Screen 1, above ground -->
+          <div class="t display" id="hook" style="top: 520px; color: var(--ink)">Fixed from the inside.</div>
+          <div class="t body" id="hookSub" style="top: 860px; color: var(--ink)">A Brendale plumber worth knowing.</div>
+
+          <!-- Screen 2, the pipe -->
+          <div class="t name" id="name" style="top: 2010px">Pipe Relining Brisbane</div>
+          <div id="pipe">
+            <div id="pipeInside">
+              <div id="liner"></div>
+            </div>
+            <svg id="crack" width="1120" height="250" viewBox="0 0 1120 250">
+              <polyline points="610,0 594,22 622,40 600,64 628,92" fill="none" stroke="#241d19" stroke-width="9" stroke-linejoin="round" />
+            </svg>
+            <svg id="root-intrusion" width="1120" height="250" viewBox="0 0 1120 250">
+              <path d="M612 -30 C 600 -10, 640 -10, 612 40 C 596 70, 650 90, 640 140" fill="none" stroke="#c9a27a" stroke-width="10" stroke-linecap="round" />
+              <path d="M626 70 C 660 80, 690 100, 700 130" fill="none" stroke="#c9a27a" stroke-width="6" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="t body" id="where" style="top: 2900px; color: var(--muted-pale)">Plumber, South Pine Road, Brendale</div>
+          <div class="t body" id="what" style="top: 2990px; color: var(--pale)">Cracked pipe, no trench across the yard.</div>
+
+          <!-- Screen 3, the rating -->
+          <div class="t body" id="ratingLead" style="top: 4200px; color: var(--pale)">Rated by locals on Google</div>
+          <div class="t" id="scoreWrap" style="top: 4290px"><span id="score" style="display: inline-block">5.0</span></div>
+          <div id="stars" style="top: 4700px">
+            <svg width="96" height="92" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+            <svg width="96" height="92" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+            <svg width="96" height="92" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+            <svg width="96" height="92" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+            <svg width="96" height="92" viewBox="0 0 24 23"><path d="M12 0l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 8.2l8.2-.6z" fill="#f5b83d" /></svg>
+          </div>
+          <div class="t body" id="count" style="top: 4860px; color: var(--pale)">from 21 Google reviews</div>
+
+          <!-- Screen 4, the review -->
+          <div class="t" id="quote" style="top: 6180px; color: var(--pale); font-size: 76px; font-weight: 800; line-height: 1.12; letter-spacing: -0.03em">
+            “Fantastic service from Michael and his team. They went above and beyond to fix our difficult problem.”
+          </div>
+          <div class="t body" id="who" style="top: 6880px; color: var(--muted-pale)">Helen M., Google review</div>
+        </div>
+
+        <div id="mark">Northside Local</div>
+
+        <!-- End card -->
+        <div id="fill"></div>
+        <div id="end">
+          <div class="t display" id="endHead" style="top: 520px; font-size: 140px; opacity: 0">Northside Business Spotlight</div>
+          <div class="t body" id="endSub" style="top: 960px; font-size: 56px; opacity: 0">Know a northside business that deserves a shout-out? Tag them in the comments.</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const rise = (sel, at, d) =>
+        tl.fromTo(sel, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: d || 0.55, ease: "power3.out" }, at);
+      const camera = (y, at, d) => tl.to("#world", { y: -y, duration: d, ease: "power2.inOut" }, at);
+
+      // Screen 1: hook is already on screen at frame 0 (it's the thumbnail)
+      rise("#hookSub", 0.6);
+
+      // Down through the grass into the soil
+      camera(1700, 3.0, 1.6);
+      tl.to("#mark", { color: "#f3ede4", duration: 0.3 }, 3.5);
+
+      // The pipe: name lands, then the liner runs through and the root and crack disappear
+      rise("#name", 4.5);
+      tl.fromTo("#liner", { scaleX: 0 }, { scaleX: 1, duration: 1.7, ease: "power1.inOut" }, 5.3);
+      tl.to(["#crack", "#root-intrusion"], { opacity: 0, duration: 0.25 }, 6.15);
+      tl.fromTo("#pipe", { y: 0 }, { y: -6, duration: 0.12, yoyo: true, repeat: 1, ease: "power1.inOut" }, 6.2);
+      rise("#where", 7.0);
+      rise("#what", 7.4);
+
+      // Further down: the rating
+      camera(3840, 9.4, 1.3);
+      rise("#ratingLead", 10.4);
+      tl.fromTo("#scoreWrap", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 10.6);
+      tl.fromTo("#score", { scale: 1.35, y: 40 }, { scale: 1, y: 0, duration: 0.6, ease: "power4.out", transformOrigin: "left bottom" }, 10.6);
+      tl.fromTo("#stars svg", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.35, stagger: 0.09, ease: "back.out(2.4)" }, 11.4);
+      rise("#count", 12.1);
+
+      // Deepest: the review, held long enough to read
+      camera(5760, 13.6, 1.3);
+      rise("#quote", 14.6, 0.7);
+      rise("#who", 15.6);
+
+      // The liner colour fills the screen for the end card
+      tl.to(["#quote", "#who"], { opacity: 0, duration: 0.3 }, 20.3);
+      tl.fromTo("#fill", { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: "power3.inOut" }, 20.5);
+      tl.to("#mark", { color: "#17202a", duration: 0.2 }, 20.9);
+      rise("#endHead", 21.1);
+      rise("#endSub", 21.8);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
